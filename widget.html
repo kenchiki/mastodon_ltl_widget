@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <title>test</title>
+  <script src="vue.min.js"></script>
+  <script src="axios.min.js"></script>
+  <script>
+  window.onload = function(e) {
+    new Vue({
+      el: '#widget',
+      data: {
+        toots: []
+      },
+      mounted() {
+        axios.get('ltl.json').then(
+          response => {this.toots = response.data}
+        )
+      }
+    })
+  }
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    ul {
+      list-style: none;
+    }
+    .toots {
+      background-color: #eee;
+      border: 1px solid #ccc;
+      height: 300px;
+      width: 250px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 10px;
+    }
+    .toots > li {
+      border-bottom: 1px dotted #ccc;
+      padding: 10px;
+    }
+    .toots_name {
+      font-weight: bold;
+    }
+    .toots_text {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="widget">
+    <ul class="toots">
+      <li v-for="toot in toots">
+        <dl class="toots_toot">
+          <dt class="toots_name">{{ toot.display_name }}({{ toot.username }})</dt>
+          <dd class="toots_text">{{ toot.text }}</dd>
+        </dl>
+      </li>
+    </ul>
+  </div>
+</body>
+
+</html>
